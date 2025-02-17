@@ -1,24 +1,10 @@
 // create web server
-const express = require('express');
-const bodyParser = require('body-parser');
-const comments = require('./comments.json');
-
-const app = express();
-
-app.use(bodyParser.json());
-
-// get all comments
-app.get('/comments', (req, res) => {
-  res.json(comments);
+const http = require('http');
+const server = http.createServer((req, res) => {
+    if (req.url === '/comments') {
+        res.write('This is a comments page');
+        res.end();
+    }
 });
-
-// add a new comment
-app.post('/comments', (req, res) => {
-  const { comment } = req.body;
-  comments.push(comment);
-  res.json(comment);
-});
-
-app.listen(3000, () => {
-  console.log('Server is listening on port 3000');
-});
+server.listen(3000);
+console.log('Listening on port 3000...');
